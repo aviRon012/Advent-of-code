@@ -4,27 +4,19 @@
 using namespace std;
 
 int getScore(char a, char b){
-    char A = a - 'A';
-    char B = (A + b - 'X' + 2) % 3;
-    int score = B + 1;
-    switch ((((A - B) + 3)) % 3){
-        case 0:
-        return score + 3;
-        case 1:
-        return score;
-        case 2:
-        return score + 6;
-        default:
-        cout << "err\n";
-        return 0;
-    }
+    static const int scores[3][3]{
+        {3,4,8},
+        {1,5,9},
+        {2,6,7}
+    };
+    return scores[a][b];
 }
 
 int main(){
     string line;
     int totalScore = 0;
     while(getline(cin, line)){
-        totalScore += getScore(line[0], line[2]);
+        totalScore += getScore(line[0] - 'A', line[2] - 'X');
     }
     cout << totalScore;
     copyToClipBoard(totalScore);
