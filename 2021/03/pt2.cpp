@@ -5,50 +5,46 @@
 #include <algorithm>
 using namespace std;
 
-int intFromBinary(const vector<bool> &digits){
+int intFromBinary(string str){
     int result = 0;
-    for(auto d: digits){
+    for(auto d: str){
         result *= 2;
-        result += d;
+        result += (d =='1');
     }
     return result;
 }
 
-bool getMajority(vector<vector<bool>> &vec, int index, bool minority = false){
+char getMajority(vector<string> &lines, int index, bool minority = false){
     int count = 0;
-    for(auto &v: vec){
-        if(v[index]) count++;
+    for(auto &line: lines){
+        if(line[index] == '1') count++;
         else count--;
     }
-    return (count >= 0) ^ minority;
+    return (count >= 0) ^ minority ? '1' : '0';
 }
 
-int getNumber(vector<vector<bool>> &vec, bool minority = false){
-    int len = vec[0].size(), i;
-    vector<bool> majority;
-    auto pred = [&i, &majority](const vector<bool> &vec){return vec[i] != majority[i];};
-    for(i = 0; vec.size() > 1; i++){
+int getNumber(vector<string> &lines, bool minority = false){
+    int len = lines[0].length(), i;
+    string majority;
+    auto pred = [&i, &majority](string &line){return (line[i]) != majority[i];};
+    for(i = 0; lines.size() > 1; i++){
         majority = {};
         for(int j = 0; j < len; j++){
-            majority.push_back(getMajority(vec, i, minority));
+            majority.push_back(getMajority(lines, i, minority));
         }
-        vec.erase(remove_if(vec.begin(), vec.end(), pred), vec.end());
+        lines.erase(remove_if(lines.begin(), lines.end(), pred), lines.end());
     }
-    return intFromBinary(vec[0]);
+    return intFromBinary(lines[0]);
 }
 
 int main(){
-    vector<vector<bool>> matrix;
+    vector<string> lines;
     string line;
     while(getline(cin, line)){
-        vector<bool> digits;
-        for(auto &c: line){
-            digits.push_back(c == '1');
-        }
-        matrix.push_back(digits);
+        lines.push_back(line);
     }
-    auto copy = matrix;
-    int oxygen = getNumber(matrix);
+    auto copy = lines;
+    int oxygen = getNumber(lines);
     int co2 = getNumber(copy, true);
     int result = oxygen * co2;
     cout << result;

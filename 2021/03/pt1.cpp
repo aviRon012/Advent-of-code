@@ -4,38 +4,34 @@
 #include <vector>
 using namespace std;
 
-int intFromBinary(const vector<bool> &digits, bool inverse = false){
+int intFromBinary(string &line, bool inverse = false){
     int result = 0;
-    for(auto d: digits){
+    for(auto d: line){
         result *= 2;
-        result += inverse ^ d;
+        result += inverse ^ (d == '1');
     }
     return result;
 }
 
-bool getMajority(vector<vector<bool>> &vec, int index){
+char getMajority(vector<string> &lines, int index){
     int count = 0;
-    for(auto &v: vec){
-        if(v[index]) count++;
+    for(auto &line: lines){
+        if(line[index] == '1') count++;
         else count--;
     }
-    return count > 0;
+    return (count > 0) ? '1' : '0';
 }
 
 int main(){
-    vector<vector<bool>> matrix;
+    vector<string> lines;
     string line;
     while(getline(cin, line)){
-        vector<bool> digits;
-        for(auto &c: line){
-            digits.push_back(c == '1');
-        }
-        matrix.push_back(digits);
+        lines.push_back(line);
     }
-    int len = matrix[0].size();
-    vector<bool> majorityVec;
+    int len = lines[0].length();
+    string majorityVec;
     for(int i = 0; i < len; i++){
-        majorityVec.push_back(getMajority(matrix, i));
+        majorityVec.push_back(getMajority(lines, i));
     }
     int gamma = intFromBinary(majorityVec);
     int epsilon = intFromBinary(majorityVec, true);
