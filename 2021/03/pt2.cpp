@@ -1,9 +1,12 @@
-#include "..\..\clipboard.hpp"
-#include <string.h>
+#include <windows.h>
 #include <iostream>
+#include <fstream>
+#include <string>
 #include <vector>
 #include <algorithm>
 using namespace std;
+
+int expected = 230;
 
 int intFromBinary(string str){
     int result = 0;
@@ -37,16 +40,50 @@ int getNumber(vector<string> &lines, bool minority = false){
     return intFromBinary(lines[0]);
 }
 
-int main(){
-    vector<string> lines;
-    string line;
-    while(getline(cin, line)){
-        lines.push_back(line);
-    }
+int handleLines(vector<string> &lines){
     auto copy = lines;
     int oxygen = getNumber(lines);
     int co2 = getNumber(copy, true);
-    int result = oxygen * co2;
+    return oxygen * co2;
+}
+
+int handleFile(const string &path){
+    fstream file;
+    file.open(path, ios::in);
+    if(!file.is_open()){
+        cout << "\33[31mCan't open file: " << path << "\33[39m\n";
+        return -1;
+    }
+    vector<string> lines;
+    string line;
+    while(getline(file, line)) lines.push_back(line);
+    file.close();
+    return handleLines(lines);
+}
+
+void clipboard(int64_t num){
+    string str = to_string(num);
+    const size_t len = str.length() + 1;
+    HGLOBAL hMem =  GlobalAlloc(GMEM_MOVEABLE, len);
+    memcpy(GlobalLock(hMem), str.c_str(), len);
+    GlobalUnlock(hMem);
+    OpenClipboard(0);
+    EmptyClipboard();
+    SetClipboardData(CF_TEXT, hMem);
+    CloseClipboard();
+}
+
+int main()
+{
+    int result;
+    result = handleFile("example.txt");
     cout << result;
-    copyToClipBoard(result);
+    if(result == expected){
+        cout << " \33[32m[OK]\33[39m\n";
+    }else{
+        cout << " != " << expected << " \33[31m[FAIL]\33[39m\n";
+    }
+    result = handleFile("input.txt");
+    cout << result;
+    clipboard(result);
 }
