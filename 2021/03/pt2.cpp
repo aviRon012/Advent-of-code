@@ -48,8 +48,8 @@ int main(){
         matrix.push_back(digits);
     }
     auto copy = matrix;
-    int oxygen = getNumber(copy);
-    int co2 = getNumber(matrix, true);
+    int oxygen = getNumber(matrix);
+    int co2 = getNumber(copy, true);
     int result = oxygen * co2;
     cout << result;
     copyToClipBoard(result);
