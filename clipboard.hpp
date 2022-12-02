@@ -13,4 +13,8 @@ void copyToClipBoard(const std::string &str){
     SetClipboardData(CF_TEXT, hMem);
     CloseClipboard();
 }
+
+void copyToClipBoard(int64_t num){
+    copyToClipBoard(std::to_string(num));
+}
 #endif //CLIP_BOARD_HPP
