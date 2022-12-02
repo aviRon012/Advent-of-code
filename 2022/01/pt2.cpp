@@ -3,27 +3,25 @@
 #include <fstream>
 #include <string>
 #include <vector>
+#include <algorithm>
 using namespace std;
 
-int expected = 15;
-
-int getScore(char a, char b){
-    a -= 'A';
-    b -= 'X';
-    static const int scores[3][3]{
-        {4,8,3},
-        {1,5,9},
-        {7,2,6}
-    };
-    return scores[a][b];
-}
+int expected = 45000;
 
 int handleLines(vector<string> &lines){
-    int totalScore = 0;
+    int sum = 0;
+    vector<int> sums;
     for(auto &line: lines){
-        totalScore += getScore(line[0], line[2]);
+        if(line.length() > 0){
+            sum += stoi(line);
+        }else{
+            sums.push_back(sum);
+            sum = 0;
+        }
     }
-    return totalScore;
+    sums.push_back(sum);
+    sort(sums.begin(), sums.end(), greater<int>());
+    return sums[0] + sums[1] + sums[2];
 }
 
 int handleFile(const string &path){
