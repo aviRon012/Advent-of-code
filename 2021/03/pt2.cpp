@@ -5,26 +5,37 @@
 #include <algorithm>
 using namespace std;
 
-int intFromBinary(const vector<bool> &digits, bool inverse = false){
+int intFromBinary(const vector<bool> &digits){
     int result = 0;
     for(auto d: digits){
         result *= 2;
-        result += inverse ^ d;
+        result += d;
     }
     return result;
 }
 
-bool getMajority(vector<vector<bool>> &vec, int index){
+bool getMajority(vector<vector<bool>> &vec, int index, bool minority = false){
     int count = 0;
     for(auto &v: vec){
         if(v[index]) count++;
         else count--;
     }
-    return count >= 0;
+    return (count >= 0) ^ minority;
 }
 
-int ii;
-vector<bool> maj;
+int getNumber(vector<vector<bool>> &vec, bool minority = false){
+    int len = vec[0].size(), i;
+    vector<bool> majority;
+    auto pred = [&i, &majority](const vector<bool> &vec){return vec[i] != majority[i];};
+    for(i = 0; vec.size() > 1; i++){
+        majority = {};
+        for(int j = 0; j < len; j++){
+            majority.push_back(getMajority(vec, i, minority));
+        }
+        vec.erase(remove_if(vec.begin(), vec.end(), pred), vec.end());
+    }
+    return intFromBinary(vec[0]);
+}
 
 int main(){
     vector<vector<bool>> matrix;
@@ -37,25 +48,8 @@ int main(){
         matrix.push_back(digits);
     }
     auto copy = matrix;
-    int len = copy[0].size();
-    for(ii = 0; copy.size() > 1; ii++){
-        maj = {};
-        for(int i = 0; i < len; i++){
-            maj.push_back(getMajority(copy, i));
-        }
-        copy.erase(remove_if(copy.begin(), copy.end(),
-                            [](const vector<bool> &vec){return vec[ii] != maj[ii];}), copy.end());
-    }
-    for(ii = 0; matrix.size() > 1; ii++){
-        maj = {};
-        for(int i = 0; i < len; i++){
-            maj.push_back(!getMajority(matrix, i));
-        }
-        matrix.erase(remove_if(matrix.begin(), matrix.end(),
-                            [](const vector<bool> &vec){return vec[ii] != maj[ii];}), matrix.end());
-    }
-    int oxygen = intFromBinary(copy[0]);
-    int co2 = intFromBinary(matrix[0]);
+    int oxygen = getNumber(copy);
+    int co2 = getNumber(matrix, true);
     int result = oxygen * co2;
     cout << result;
     copyToClipBoard(result);
