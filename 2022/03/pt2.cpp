@@ -8,19 +8,26 @@ using namespace std;
 
 int expected = 70;
 
+int getIntersection(string str1, string str2, string str3){
+    for(char c = 'a'; c <= 'z'; c++){
+        if(str1.find(c) != string::npos &&
+           str2.find(c) != string::npos &&
+           str3.find(c) != string::npos)
+            return c - 'a' + 1;
+    }
+    for(char c = 'A'; c <= 'Z'; c++){
+        if(str1.find(c) != string::npos &&
+           str2.find(c) != string::npos &&
+           str3.find(c) != string::npos)
+            return c - 'A' + 27;
+    }
+    return -1;
+}
+
 int handleLines(vector<string> &lines){
     int sum = 0;
     for(int i = 0; i < lines.size(); i += 3){
-        sort(lines[i].begin(), lines[i].end());
-        sort(lines[i+1].begin(), lines[i+1].end());
-        string temp1;
-        set_intersection(lines[i].begin(), lines[i].end(), lines[i+1].begin(), lines[i+1].end(), back_inserter(temp1));
-        sort(temp1.begin(), temp1.end());
-        sort(lines[i+2].begin(), lines[i+2].end());
-        string temp2;
-        set_intersection(temp1.begin(), temp1.end(), lines[i+2].begin(), lines[i+2].end(), back_inserter(temp2));
-        if(temp2[0] >= 'a') sum += (temp2[0] - 'a' + 1);
-        else sum += (temp2[0] - 'A' + 27);
+        sum += getIntersection(lines[i], lines[i + 1], lines[i + 2]);
     }
     return sum;
 }

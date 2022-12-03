@@ -8,19 +8,24 @@ using namespace std;
 
 int expected = 157;
 
+int getIntersection(string str1, string str2){
+    for(char c = 'a'; c <= 'z'; c++){
+        if(str1.find(c) != string::npos &&
+           str2.find(c) != string::npos)
+            return c - 'a' + 1;
+    }
+    for(char c = 'A'; c <= 'Z'; c++){
+        if(str1.find(c) != string::npos &&
+           str2.find(c) != string::npos)
+            return c - 'A' + 27;
+    }
+    return -1;
+}
+
 int handleLines(vector<string> &lines){
     int sum = 0;
     for(auto &line: lines){
-        int half = line.length()/2;
-        string str1 = line.substr(0, half);
-        string str2 = line.substr(half, line.length());
-
-        sort(str1.begin(), str1.end());
-        sort(str2.begin(), str2.end());
-        string intersection;
-        set_intersection(str1.begin(), str1.end(), str2.begin(), str2.end(), back_inserter(intersection));
-        if(intersection[0] >= 'a') sum += (intersection[0] - 'a' + 1);
-        else sum += (intersection[0] - 'A' + 27);
+        sum += getIntersection(line.substr(0, line.length()/2), line.substr(line.length()/2, line.length()));
     }
     return sum;
 }
