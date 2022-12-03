@@ -3,27 +3,11 @@
 using namespace std;
 using namespace Aoc;
 
-int expected = 900;
+int expected; //TODO initialize
 
 int handleFile(const string &path){
     auto lines = FileToLines(path);
-    auto elemLines = LinesToElements(lines);
-    int aim = 0, deapth = 0, horizontal = 0;
-    for(auto &line: elemLines){
-        int num = stoi(line[1]);
-        switch(line[0][0]){
-            case 'u':
-                aim -= num;
-                break;
-            case 'd':
-                aim += num;
-                break;
-            case 'f':
-                horizontal += num;
-                deapth += num * aim;
-        }
-    }
-    return horizontal * deapth;
+    //TODO solve
 }
 
 int main()
