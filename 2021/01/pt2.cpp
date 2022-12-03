@@ -17,15 +17,10 @@ int handleLines(vector<string> &lines){
     for(auto &line: lines){
         nums.push_back(stoi(line));
     }
-    int len = sz(nums) - 2;
-    vector<int> sums;
-    FOR(i, 0, len){
-        sums.push_back(nums[i] + nums[i + 1] + nums[i + 2]);
-    }
-    len--;
+    int len = sz(nums) - 3;
     int count = 0;
     FOR(i, 0, len){
-        count += (sums[i] < sums[i + 1]);
+        count += (nums[i] < nums[i + 3]);
     }
     return count;
 }
