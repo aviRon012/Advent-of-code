@@ -24,7 +24,7 @@ int getIntersection(string str1, string str2){
 int handleLines(vector<string> &lines){
     int sum = 0;
     for(auto &line: lines){
-        sum += getIntersection(line.substr(0, line.length()/2), line.substr(line.length()/2, line.length()));
+        sum += getIntersection(line.substr(0, line.length()/2), line.substr(line.length()/2));
     }
     return sum;
 }
