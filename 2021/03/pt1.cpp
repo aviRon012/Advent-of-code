@@ -5,6 +5,11 @@
 #include <vector>
 using namespace std;
 
+//#define int int64_t
+#define sz(x) (x).size()
+#define ALL(x) (x).begin(), (x).end()
+#define FOR(i, L, R) for(int i = (L); i < (R); i++)
+
 int expected = 198;
 
 int intFromBinary(string &line, bool inverse = false){
@@ -26,9 +31,9 @@ char getMajority(vector<string> &lines, int index){
 }
 
 int handleLines(vector<string> &lines){
-    int len = lines[0].length();
+    int len = sz(lines[0]);
     string majorityBits;
-    for(int i = 0; i < len; i++){
+    FOR(i, 0, len){
         majorityBits.push_back(getMajority(lines, i));
     }
     int gamma = intFromBinary(majorityBits);
@@ -50,7 +55,7 @@ int handleFile(const string &path){
     return handleLines(lines);
 }
 
-void clipboard(int64_t num){
+void clipboard(int num){
     string str = to_string(num);
     const size_t len = str.length() + 1;
     HGLOBAL hMem =  GlobalAlloc(GMEM_MOVEABLE, len);

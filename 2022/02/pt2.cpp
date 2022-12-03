@@ -5,6 +5,11 @@
 #include <vector>
 using namespace std;
 
+//#define int int64_t
+#define sz(x) (x).size()
+#define ALL(x) (x).begin(), (x).end()
+#define FOR(i, L, R) for(int i = (L); i < (R); i++)
+
 int expected = 12;
 
 int getScore(char a, char b){
@@ -40,7 +45,7 @@ int handleFile(const string &path){
     return handleLines(lines);
 }
 
-void clipboard(int64_t num){
+void clipboard(int num){
     string str = to_string(num);
     const size_t len = str.length() + 1;
     HGLOBAL hMem =  GlobalAlloc(GMEM_MOVEABLE, len);

@@ -6,6 +6,11 @@
 #include <algorithm>
 using namespace std;
 
+//#define int int64_t
+#define sz(x) (x).size()
+#define ALL(x) (x).begin(), (x).end()
+#define FOR(i, L, R) for(int i = (L); i < (R); i++)
+
 int expected = 24000;
 
 int handleLines(vector<string> &lines){
@@ -20,7 +25,7 @@ int handleLines(vector<string> &lines){
         }
     }
     sums.push_back(sum);
-    sort(sums.begin(), sums.end(), greater<int>());
+    sort(ALL(sums), greater<int>());
     return sums[0];
 }
 
@@ -38,7 +43,7 @@ int handleFile(const string &path){
     return handleLines(lines);
 }
 
-void clipboard(int64_t num){
+void clipboard(int num){
     string str = to_string(num);
     const size_t len = str.length() + 1;
     HGLOBAL hMem =  GlobalAlloc(GMEM_MOVEABLE, len);

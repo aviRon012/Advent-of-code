@@ -6,6 +6,11 @@
 #include <algorithm>
 using namespace std;
 
+//#define int int64_t
+#define sz(x) (x).size()
+#define ALL(x) (x).begin(), (x).end()
+#define FOR(i, L, R) for(int i = (L); i < (R); i++)
+
 int expected = 230;
 
 int intFromBinary(string str){
@@ -27,15 +32,15 @@ char getMajority(vector<string> &lines, int index, bool minority = false){
 }
 
 int getNumber(vector<string> &lines, bool minority = false){
-    int len = lines[0].length(), i;
+    int len = sz(lines[0]), i;
     string majority;
     auto pred = [&i, &majority](string &line){return (line[i]) != majority[i];};
-    for(i = 0; lines.size() > 1; i++){
+    for(i = 0; sz(lines) > 1; i++){
         majority = {};
-        for(int j = 0; j < len; j++){
+        FOR(j, 0, len){
             majority.push_back(getMajority(lines, i, minority));
         }
-        lines.erase(remove_if(lines.begin(), lines.end(), pred), lines.end());
+        lines.erase(remove_if(ALL(lines), pred), lines.end());
     }
     return intFromBinary(lines[0]);
 }
@@ -61,7 +66,7 @@ int handleFile(const string &path){
     return handleLines(lines);
 }
 
-void clipboard(int64_t num){
+void clipboard(int num){
     string str = to_string(num);
     const size_t len = str.length() + 1;
     HGLOBAL hMem =  GlobalAlloc(GMEM_MOVEABLE, len);

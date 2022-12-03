@@ -5,15 +5,20 @@
 #include <vector>
 using namespace std;
 
+//#define int int64_t
+#define sz(x) (x).size()
+#define ALL(x) (x).begin(), (x).end()
+#define FOR(i, L, R) for(int i = (L); i < (R); i++)
+
 int expected = 157;
 
 int getIntersection(string str1, string str2){
-    for(char c = 'a'; c <= 'z'; c++){
+    FOR(c, 'a', 'z' + 1){
         if(str1.find(c) != string::npos &&
            str2.find(c) != string::npos)
             return c - 'a' + 1;
     }
-    for(char c = 'A'; c <= 'Z'; c++){
+    FOR(c, 'A', 'Z' + 1){
         if(str1.find(c) != string::npos &&
            str2.find(c) != string::npos)
             return c - 'A' + 27;
@@ -43,7 +48,7 @@ int handleFile(const string &path){
     return handleLines(lines);
 }
 
-void clipboard(int64_t num){
+void clipboard(int num){
     string str = to_string(num);
     const size_t len = str.length() + 1;
     HGLOBAL hMem =  GlobalAlloc(GMEM_MOVEABLE, len);
