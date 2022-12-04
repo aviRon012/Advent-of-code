@@ -7,11 +7,9 @@ int expected = 4;
 
 bool overlaps(int x0, int x1, int y0, int y1)
 {
-    if(x0 <= y0 && x1 >= y0) return true;
-    if(x0 <= y1 && x1 >= y1) return true;
-    if(y0 <= x0 && y1 >= x0) return true;
-    if(y0 <= x1 && y1 >= x1) return true;
-    return false;
+    if(x1 < y0) return false;
+    if(y1 < x0) return false;
+    return true;
 }
 
 int handleFile(const string &path)
