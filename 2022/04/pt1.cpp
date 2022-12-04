@@ -15,16 +15,10 @@ bool isContained(int x0, int x1, int y0, int y1)
 int handleFile(const string &path)
 {
     auto lines = FileToLines(path);
-    int x0, x1, y0, y1, count = 0, pos;
+    int count = 0, pos;
     for(auto &line: lines){
-        x0 = stoi(line.substr(0 ,pos = line.find('-')));
-        line.erase(0, pos + 1);
-        x1 = stoi(line.substr(0 ,pos = line.find(',')));
-        line.erase(0, pos + 1);
-        y0 = stoi(line.substr(0 ,pos = line.find('-')));
-        line.erase(0, pos + 1);
-        y1 = stoi(line);
-        count += isContained(x0, x1, y0, y1);
+        auto nums = SplitByDelimiters(line, {",", "-"});
+        count += isContained(stoi(nums[0]), stoi(nums[1]), stoi(nums[2]), stoi(nums[3]));
     }
     return count;
 }

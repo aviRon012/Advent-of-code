@@ -64,4 +64,37 @@ vector<vector<string>> LinesToElements(const vector<string> &lines)
     return lineVec;
 }
 
+vector<string> SplitByDelimiter(string str, const string &delimiter)
+{
+    vector<string> segments;
+    size_t pos;
+    while((pos = str.find(delimiter)) != string::npos){
+        segments.push_back(str.substr(0, pos));
+        str.erase(0, pos + delimiter.size());
+    }
+    if(str.size()) segments.push_back(str);
+    return segments;
+}
+
+static vector<string> muliSplit(vector<string> &strs, const string &delimiter)
+{
+    vector<string> segments;
+    for(auto &str: strs){
+        auto segs = SplitByDelimiter(str, delimiter);
+        for(auto &seg: segs){
+            segments.push_back(seg);
+        }
+    }
+    return segments;
+}
+
+vector<string> SplitByDelimiters(string str, const vector<string> &delimiters)
+{
+    vector<string> segments{str};
+    for(auto &delim: delimiters){
+        segments = muliSplit(segments, delim);
+    }
+    return segments;
+}
+
 } //Aoc

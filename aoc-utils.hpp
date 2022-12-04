@@ -15,5 +15,8 @@ std::vector<std::vector<std::string>> LinesToBlocks(const std::vector<std::strin
 
 std::vector<std::vector<std::string>> LinesToElements(const std::vector<std::string> &lines);
 
+std::vector<std::string> SplitByDelimiter(std::string str, const std::string &delimiter);
+
+std::vector<std::string> SplitByDelimiters(std::string str, const std::vector<std::string> &delimiters);
 }; //Aoc
 #endif //AOC_UTILS_HPP
