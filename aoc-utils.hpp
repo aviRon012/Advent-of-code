@@ -2,12 +2,15 @@
 #define AOC_UTILS_HPP
 #include <string>
 #include <vector>
+#include <fstream>
 
 #define ALL(x) (x).begin(), (x).end()
 
 namespace Aoc{
 
 void clipboard(const std::string &str);
+
+std::fstream openFile(const std::string &path);
 
 std::vector<std::string> fileToLines(const std::string &path);
 

@@ -6,7 +6,7 @@ using namespace Aoc;
 int expected; //TODO initialize
 
 int handleFile(const string &path){
-    auto lines = FileToLines(path);
+    auto file = openFile(path);
     //TODO solve
 }
 

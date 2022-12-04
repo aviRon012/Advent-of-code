@@ -6,15 +6,12 @@ using namespace Aoc;
 int expected = 5;
 
 int handleFile(const string &path){
-    auto lines = fileToLines(path);
+    auto file = openFile(path);
     vector<int> nums;
-    for(auto &line: lines){
-        nums.push_back(stoi(line));
-    }
+    int num;
+    while(file >> num) nums.push_back(num);
     int count = 0;
-    for(int i = 3; i < nums.size(); i++){
-        count += (nums[i] > nums[i - 3]);
-    }
+    for(int i = 3; i < nums.size(); i++) count += (nums[i] > nums[i - 3]);
     return count;
 }
 

@@ -6,12 +6,11 @@ using namespace Aoc;
 int expected = 900;
 
 int handleFile(const string &path){
-    auto lines = fileToLines(path);
-    int aim = 0, deapth = 0, horizontal = 0;
-    for(auto &line: lines){
-        auto segs = splitByDelimiter(line, " ");
-        int num = stoi(segs[1]);
-        switch(segs[0][0]){
+    auto file = openFile(path);
+    int aim = 0, deapth = 0, horizontal = 0, num;
+    string direction;
+    while(file >> direction >> num){
+        switch(direction[0]){
             case 'u':
                 aim -= num;
                 break;

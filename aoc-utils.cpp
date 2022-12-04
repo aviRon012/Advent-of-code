@@ -1,7 +1,6 @@
 #include "aoc-utils.hpp"
 #include <windows.h>
 #include <iostream>
-#include <fstream>
 #include <sstream>
 using namespace std;
 
@@ -19,14 +18,18 @@ void clipboard(const string &str)
     CloseClipboard();
 }
 
-vector<string> fileToLines(const string &path)
+fstream openFile(const string &path)
 {
     fstream file;
     file.open(path, ios::in);
-    if(!file.is_open()){
-        cout << "\33[31mCan't open file: " << path << "\33[39m\n";
-        return {};
-    }
+    if(!file.is_open()) cout << "\33[31mCan't open file: " << path << "\33[39m\n";
+    return file;
+}
+
+vector<string> fileToLines(const string &path)
+{
+    auto file = openFile(path);
+    if(!file.is_open()) return {};
     vector<string> lines;
     string line;
     while(getline(file, line)) lines.push_back(line);
