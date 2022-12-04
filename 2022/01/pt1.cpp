@@ -7,8 +7,8 @@ using namespace Aoc;
 int expected = 24000;
 
 int handleFile(const string &path){
-    auto lines = FileToLines(path);
-    auto blocks = LinesToBlocks(lines);
+    auto lines = fileToLines(path);
+    auto blocks = linesToBlocks(lines);
     vector<int> sums;
     for(auto &block: blocks){
         int sum = 0;

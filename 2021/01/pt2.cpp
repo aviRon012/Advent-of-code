@@ -6,7 +6,7 @@ using namespace Aoc;
 int expected = 5;
 
 int handleFile(const string &path){
-    auto lines = FileToLines(path);
+    auto lines = fileToLines(path);
     vector<int> nums;
     for(auto &line: lines){
         nums.push_back(stoi(line));

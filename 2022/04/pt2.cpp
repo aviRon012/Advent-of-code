@@ -14,10 +14,10 @@ bool overlaps(int x0, int x1, int y0, int y1)
 
 int handleFile(const string &path)
 {
-    auto lines = FileToLines(path);
+    auto lines = fileToLines(path);
     int count = 0, pos;
     for(auto &line: lines){
-        auto nums = SplitByDelimiters(line, {",", "-"});
+        auto nums = splitByDelimiters(line, {",", "-"});
         count += overlaps(stoi(nums[0]), stoi(nums[1]), stoi(nums[2]), stoi(nums[3]));
     }
     return count;

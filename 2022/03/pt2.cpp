@@ -22,7 +22,7 @@ int getIntersection(string str1, string str2, string str3){
 }
 
 int handleFile(const string &path){
-    auto lines = FileToLines(path);
+    auto lines = fileToLines(path);
     int sum = 0;
     for(int i = 0; i < lines.size(); i += 3){
         sum += getIntersection(lines[i], lines[i + 1], lines[i + 2]);

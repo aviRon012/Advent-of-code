@@ -17,11 +17,11 @@ int getScore(char a, char b){
 }
 
 int handleFile(const string &path){
-    auto lines = FileToLines(path);
-    auto elems = LinesToElements(lines);
+    auto lines = fileToLines(path);
     int totalScore = 0;
-    for(auto &line: elems){
-        totalScore += getScore(line[0][0], line[1][0]);
+    for(auto &line: lines){
+        auto segs = splitByDelimiter(line, " ");
+        totalScore += getScore(segs[0][0], segs[1][0]);
     }
     return totalScore;
 }

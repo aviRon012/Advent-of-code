@@ -24,7 +24,7 @@ char getMajority(vector<string> &lines, int index){
 }
 
 int handleFile(const string &path){
-    auto lines = FileToLines(path);
+    auto lines = fileToLines(path);
     string majorityBits;
     for(int i = 0; i < lines[0].size(); i++){
         majorityBits.push_back(getMajority(lines, i));

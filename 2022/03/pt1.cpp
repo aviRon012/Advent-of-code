@@ -20,7 +20,7 @@ int getIntersection(string str1, string str2){
 }
 
 int handleFile(const string &path){
-    auto lines = FileToLines(path);
+    auto lines = fileToLines(path);
     int sum = 0;
     for(auto &line: lines){
         sum += getIntersection(line.substr(0, line.length()/2), line.substr(line.length()/2));

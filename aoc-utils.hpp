@@ -9,14 +9,12 @@ namespace Aoc{
 
 void clipboard(const std::string &str);
 
-std::vector<std::string> FileToLines(const std::string &path);
+std::vector<std::string> fileToLines(const std::string &path);
 
-std::vector<std::vector<std::string>> LinesToBlocks(const std::vector<std::string> &lines);
+std::vector<std::vector<std::string>> linesToBlocks(const std::vector<std::string> &lines);
 
-std::vector<std::vector<std::string>> LinesToElements(const std::vector<std::string> &lines);
+std::vector<std::string> splitByDelimiter(std::string str, const std::string &delimiter);
 
-std::vector<std::string> SplitByDelimiter(std::string str, const std::string &delimiter);
-
-std::vector<std::string> SplitByDelimiters(std::string str, const std::vector<std::string> &delimiters);
+std::vector<std::string> splitByDelimiters(std::string str, const std::vector<std::string> &delimiters);
 }; //Aoc
 #endif //AOC_UTILS_HPP

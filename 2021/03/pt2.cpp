@@ -39,7 +39,7 @@ int getNumber(vector<string> &lines, bool minority = false){
 }
 
 int handleFile(const string &path){
-    auto lines = FileToLines(path);
+    auto lines = fileToLines(path);
     auto copy = lines;
     int oxygen = getNumber(lines);
     int co2 = getNumber(copy, true);
