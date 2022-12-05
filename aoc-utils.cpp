@@ -1,7 +1,7 @@
 #include "aoc-utils.hpp"
 #include <windows.h>
 #include <iostream>
-#include <sstream>
+#include <algorithm>
 using namespace std;
 
 namespace Aoc{
@@ -24,6 +24,25 @@ fstream openFile(const string &path)
     file.open(path, ios::in);
     if(!file.is_open()) cout << "\33[31mCan't open file: " << path << "\33[39m\n";
     return file;
+}
+
+istringstream &lineStream(fstream &file, istringstream &line)
+{
+    line.clear();
+    string ln;
+    getline(file, ln);
+    line.str(ln);
+    return line;
+}
+
+istringstream &lineStreamNoPunctuation(fstream &file, istringstream &line)
+{
+    line.clear();
+    string ln;
+    getline(file, ln);
+    replace_if(ALL(ln), [](const char &c){return ispunct(c);}, ' ');
+    line.str(ln);
+    return line;
 }
 
 vector<string> fileToLines(const string &path)

@@ -3,6 +3,7 @@
 #include <string>
 #include <vector>
 #include <fstream>
+#include <sstream>
 
 #define ALL(x) (x).begin(), (x).end()
 
@@ -11,6 +12,10 @@ namespace Aoc{
 void clipboard(const std::string &str);
 
 std::fstream openFile(const std::string &path);
+
+std::istringstream &lineStream(std::fstream &file, std::istringstream &line);
+
+std::istringstream &lineStreamNoPunctuation(std::fstream &file, std::istringstream &line);
 
 std::vector<std::string> fileToLines(const std::string &path);
 

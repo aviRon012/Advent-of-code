@@ -7,12 +7,12 @@ using namespace Aoc;
 int expected = 24000;
 
 int handleFile(const string &path){
-    auto lines = fileToLines(path);
-    auto blocks = linesToBlocks(lines);
+    auto file = openFile(path);
+    istringstream line;
     vector<int> sums;
-    for(auto &block: blocks){
-        int sum = 0;
-        for(auto &line: block) sum += stoi(line);
+    while(file){
+        int num, sum = 0;
+        while(lineStream(file, line) >> num) sum += num;
         sums.push_back(sum);
     }
     sort(ALL(sums), greater<int>());

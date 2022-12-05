@@ -20,9 +20,10 @@ int getIntersection(string str1, string str2){
 }
 
 int handleFile(const string &path){
-    auto lines = fileToLines(path);
+    auto file = openFile(path);
     int sum = 0;
-    for(auto &line: lines){
+    string line;
+    while(getline(file, line)){
         sum += getIntersection(line.substr(0, line.length()/2), line.substr(line.length()/2));
     }
     return sum;
