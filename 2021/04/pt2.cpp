@@ -28,9 +28,8 @@ bool ckeckForWin(array<array<int, 5>, 5> &board, int i, int j)
 
 bool updateBoard(array<array<int, 5>, 5> &board, int num)
 {
-    int i, j;
-    for(i = 0; i < 5; i++){
-        for(j = 0; j < 5; j++){
+    for(int i = 0; i < 5; i++){
+        for(int j = 0; j < 5; j++){
             if(board[i][j] == num){
                 board[i][j] = -1;
                 return ckeckForWin(board, i, j);
@@ -69,12 +68,11 @@ int handleFile(const string &path)
         }
         if(file) boards.push_back(board);
     }
-    int yetToWin = boards.size();
     for(auto &num: nums){
-        for(auto &board: boards){
-            if(updateBoard(board, num)){
-                yetToWin--;
-                if(!yetToWin) return evalWin(board, num);
+        for(auto it = boards.begin(); it != boards.end(); it++){
+            if(updateBoard(*it, num)){
+                if(boards.size() == 1) return evalWin(*it, num);
+                boards.erase(it--);
             }
         }
     }
