@@ -30,10 +30,9 @@ string handleFile(const string &path){
     while(file >> s1 >> num >> s2 >> from >> s3 >> to){
         to--;
         from--;
-        for(int i = 0; i < num; i++){
-            piles[to].push_back(piles[from].back());
-            piles[from].pop_back();
-        }
+        string temp(piles[from].rbegin(), piles[from].rbegin() + num);
+        piles[to].insert(piles[to].end(), ALL(temp));
+        piles[from].erase(piles[from].size() - num);
         //for(auto &pile: piles) cout << pile << endl;
         //cout << "---" << endl;
     }
