@@ -1,50 +1,51 @@
 #include "../../aoc-utils.hpp"
 #include <iostream>
+#include <bitset>
 using namespace std;
 using namespace Aoc;
 
 int expected = 198;
 
-int intFromBinary(string &line, bool inverse = false){
-    int result = 0;
-    for(auto d: line){
-        result *= 2;
-        result += inverse ^ (d == '1');
-    }
-    return result;
-}
-
-char getMajority(vector<string> &lines, int index){
+template<int n>
+bool majorityAtIndex(vector<bitset<n>> &bits, int index)
+{
     int count = 0;
-    for(auto &line: lines){
-        if(line[index] == '1') count++;
-        else count--;
-    }
-    return (count > 0) ? '1' : '0';
+    for(auto &b: bits) count += b[index];
+    return count >= bits.size() - count;
 }
 
-int handleFile(const string &path){
-    auto lines = fileToLines(path);
-    string majorityBits;
-    for(int i = 0; i < lines[0].size(); i++){
-        majorityBits.push_back(getMajority(lines, i));
-    }
-    int gamma = intFromBinary(majorityBits);
-    int epsilon = intFromBinary(majorityBits, true);
+template<int n>
+bitset<n> majority(vector<bitset<n>> &bits)
+{
+    bitset<n> m;
+    for(int i = 0; i < n; i++) m[i] = majorityAtIndex<n>(bits, i);
+    return m;
+}
+
+template<int n>
+int handleFile(const string &path)
+{
+    auto file = openFile(path);
+    bitset<n> in, maj;
+    vector<bitset<n>> bits;
+    while(file >> in) bits.push_back(in);
+    maj = majority<n>(bits);
+    int gamma = maj.to_ulong();
+    int epsilon = maj.flip().to_ulong();
     return gamma * epsilon;
 }
 
 int main()
 {
     int result;
-    result = handleFile("example.txt");
+    result = handleFile<5>("example.txt");
     cout << result;
     if(result == expected){
         cout << " \33[32m[OK]\33[39m\n";
     }else{
         cout << " != " << expected << " \33[31m[FAIL]\33[39m\n";
     }
-    result = handleFile("input.txt");
+    result = handleFile<12>("input.txt");
     cout << result;
     clipboard(to_string(result));
 }

@@ -1,62 +1,54 @@
 #include "../../aoc-utils.hpp"
 #include <iostream>
 #include <algorithm>
+#include <bitset>
 using namespace std;
 using namespace Aoc;
 
 int expected = 230;
 
-int intFromBinary(string str){
-    int result = 0;
-    for(auto d: str){
-        result *= 2;
-        result += (d =='1');
-    }
-    return result;
-}
-
-char getMajority(vector<string> &lines, int index, bool minority = false){
+template<int n>
+bool majorityAtIndex(vector<bitset<n>> &bits, int index)
+{
     int count = 0;
-    for(auto &line: lines){
-        if(line[index] == '1') count++;
-        else count--;
-    }
-    return (count >= 0) ^ minority ? '1' : '0';
+    for(auto &b: bits) count += b[index];
+    return count >= bits.size() - count;
 }
 
-int getNumber(vector<string> &lines, bool minority = false){
-    int i;
-    string majority;
-    auto pred = [&i, &majority](string &line){return (line[i]) != majority[i];};
-    for(i = 0; lines.size() > 1; i++){
-        majority = {};
-        for(int j = 0; j < lines[0].size(); j++){
-            majority.push_back(getMajority(lines, i, minority));
-        }
-        lines.erase(remove_if(ALL(lines), pred), lines.end());
+template<int n>
+int handleFile(const string &path)
+{
+    auto file = openFile(path);
+    bitset<n> in;
+    vector<bitset<n>> bits;
+    while(file >> in) bits.push_back(in);
+    auto copy = bits;
+    for(int i = n-1; bits.size() > 1; i--){
+        bool b = majorityAtIndex<n>(bits, i);
+        auto pred = [i, b](bitset<n> &bi){return bi[i] ^ b;};
+        bits.erase(remove_if(ALL(bits), pred), bits.end());
     }
-    return intFromBinary(lines[0]);
-}
-
-int handleFile(const string &path){
-    auto lines = fileToLines(path);
-    auto copy = lines;
-    int oxygen = getNumber(lines);
-    int co2 = getNumber(copy, true);
+    int oxygen = bits[0].to_ulong();
+    for(int i = n-1; copy.size() > 1; i--){
+        bool b = !majorityAtIndex<n>(copy, i);
+        auto pred = [i, b](bitset<n> &bi){return bi[i] ^ b;};
+        copy.erase(remove_if(ALL(copy), pred), copy.end());
+    }
+    int co2 = copy[0].to_ulong();
     return oxygen * co2;
 }
 
 int main()
 {
     int result;
-    result = handleFile("example.txt");
+    result = handleFile<5>("example.txt");
     cout << result;
     if(result == expected){
         cout << " \33[32m[OK]\33[39m\n";
     }else{
         cout << " != " << expected << " \33[31m[FAIL]\33[39m\n";
     }
-    result = handleFile("input.txt");
+    result = handleFile<12>("input.txt");
     cout << result;
     clipboard(to_string(result));
 }

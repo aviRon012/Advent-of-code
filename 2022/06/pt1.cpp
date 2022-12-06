@@ -1,27 +1,20 @@
 #include "../../aoc-utils.hpp"
 #include <iostream>
-#include <algorithm>
+#include <set>
 using namespace std;
 using namespace Aoc;
 
 int expected = 7;
 
-bool isUniqe(string &str)
-{
-    sort(ALL(str));
-    for(int j = 1; j < 4; j++) if(str[j] == str[j-1]) return false;
-    return true;
-}
-
 int handleFile(const string &path){
     auto file = openFile(path);
     string line;
     getline(file, line);
-    for(int i = 4; i < line.size(); i++){
-        string sub = line.substr(i-4, 4);
-        //cout << sub;
-        if(isUniqe(sub)) {return i;}
-        //cout <<' ' << sub << endl;
+    int buffLen = 4;
+    for(int i = buffLen; i < line.size(); i++){
+        string buff = line.substr(i-buffLen, buffLen);
+        set<char> chars{ALL(buff)};
+        if (chars.size() == buffLen) return i;
     }
     return 0;
 }
