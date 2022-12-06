@@ -15,7 +15,7 @@ string handleFile(const string &path){
         while(lineStream(file, line) >> num) sum += num;
         sums.push_back(sum);
     }
-    sort(ALL(sums), greater<int>());
+    nth_element(sums.begin(), sums.begin() + 2, sums.end(), greater<int>());
     return to_string(sums[0] + sums[1] + sums[2]);
 }
 

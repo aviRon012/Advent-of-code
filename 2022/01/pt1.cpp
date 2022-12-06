@@ -15,8 +15,7 @@ string handleFile(const string &path){
         while(lineStream(file, line) >> num) sum += num;
         sums.push_back(sum);
     }
-    sort(ALL(sums), greater<int>());
-    return to_string(sums[0]);
+    return to_string(*max_element(ALL(sums)));
 }
 
 int main()
