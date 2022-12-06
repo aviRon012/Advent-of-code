@@ -3,7 +3,7 @@
 using namespace std;
 using namespace Aoc;
 
-int expected = 70;
+string expected = "70";
 
 int getIntersection(string str1, string str2, string str3){
     for(char c = 'a'; c <= 'z'; c++){
@@ -21,27 +21,21 @@ int getIntersection(string str1, string str2, string str3){
     return -1;
 }
 
-int handleFile(const string &path){
+string handleFile(const string &path){
     auto file = openFile(path);
     int sum = 0;
     string line1, line2, line3;
     while(getline(file, line1) && getline(file, line2) && getline(file, line3)){
         sum += getIntersection(line1, line2, line3);
     }
-    return sum;
+    return to_string(sum);
 }
 
 int main()
 {
-    int result;
-    result = handleFile("example.txt");
-    cout << result;
-    if(result == expected){
-        cout << " \33[32m[OK]\33[39m\n";
-    }else{
-        cout << " != " << expected << " \33[31m[FAIL]\33[39m\n";
-    }
+    string result = handleFile("example.txt");
+    printResult(result, expected);
     result = handleFile("input.txt");
     cout << result;
-    clipboard(to_string(result));
+    clipboard(result);
 }

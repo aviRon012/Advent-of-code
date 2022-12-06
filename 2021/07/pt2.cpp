@@ -4,7 +4,7 @@
 using namespace std;
 using namespace Aoc;
 
-int expected = 168;
+string expected = "168";
 
 int cost(int pos, int guess){
     int diff = pos - guess;
@@ -18,7 +18,7 @@ int totalCost(vector<int> &nums, int guess){
     return fule;
 }
 
-int handleFile(const string &path){
+string handleFile(const string &path){
     auto file = openFile(path);
     istringstream line;
     lineStreamNoPunctuation(file, line);
@@ -29,23 +29,18 @@ int handleFile(const string &path){
     while(low < high){
         mid = (low + high)/2;
         int val1 = totalCost(nums, mid - 1), val2 = totalCost(nums, mid), val3 = totalCost(nums, mid + 1);
-        if(val1 >= val2 && val2 <= val3) return val2;
+        if(val1 >= val2 && val2 <= val3) return to_string(val2);
         if (val1 < val2) high = mid;
         else low = mid;
     }
+    return "";
 }
 
 int main()
 {
-    int result;
-    result = handleFile("example.txt");
-    cout << result;
-    if(result == expected){
-        cout << " \33[32m[OK]\33[39m\n";
-    }else{
-        cout << " != " << expected << " \33[31m[FAIL]\33[39m\n";
-    }
+    string result = handleFile("example.txt");
+    printResult(result, expected);
     result = handleFile("input.txt");
     cout << result;
-    clipboard(to_string(result));
+    clipboard(result);
 }

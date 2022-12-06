@@ -3,7 +3,7 @@
 using namespace std;
 using namespace Aoc;
 
-int expected = 12;
+string expected = "12";
 
 int getScore(char a, char b){
     a -= 'A';
@@ -16,27 +16,21 @@ int getScore(char a, char b){
     return scores[a][b];
 }
 
-int handleFile(const string &path){
+string handleFile(const string &path){
     auto file = openFile(path);
     int totalScore = 0;
     char a, b;
     while(file >> a >> b){
         totalScore += getScore(a, b);
     }
-    return totalScore;
+    return to_string(totalScore);
 }
 
 int main()
 {
-    int result;
-    result = handleFile("example.txt");
-    cout << result;
-    if(result == expected){
-        cout << " \33[32m[OK]\33[39m\n";
-    }else{
-        cout << " != " << expected << " \33[31m[FAIL]\33[39m\n";
-    }
+    string result = handleFile("example.txt");
+    printResult(result, expected);
     result = handleFile("input.txt");
     cout << result;
-    clipboard(to_string(result));
+    clipboard(result);
 }

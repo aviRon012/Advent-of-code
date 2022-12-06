@@ -4,7 +4,7 @@
 using namespace std;
 using namespace Aoc;
 
-int expected = 12;
+string expected = "12";
 
 void swap(int &a, int &b){
     int temp = a;
@@ -18,7 +18,7 @@ void order(int &a, int &b)
     swap(a, b);
 }
 
-int handleFile(const string &path){
+string handleFile(const string &path){
     auto file = openFile(path);
     int x1, y1, x2, y2;
     unordered_map<int, unordered_map<int, int>> coords;
@@ -47,20 +47,14 @@ int handleFile(const string &path){
     }
     int count = 0;
     for(auto &[x,m]: coords) for(auto &[y,n]: m) count += (n >= 2);
-    return count;
+    return to_string(count);
 }
 
 int main()
 {
-    int result;
-    result = handleFile("example.txt");
-    cout << result;
-    if(result == expected){
-        cout << " \33[32m[OK]\33[39m\n";
-    }else{
-        cout << " != " << expected << " \33[31m[FAIL]\33[39m\n";
-    }
+    string result = handleFile("example.txt");
+    printResult(result, expected);
     result = handleFile("input.txt");
     cout << result;
-    clipboard(to_string(result));
+    clipboard(result);
 }

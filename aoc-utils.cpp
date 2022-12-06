@@ -26,6 +26,16 @@ fstream openFile(const string &path)
     return file;
 }
 
+void printResult(string result, string expected)
+{
+    cout << result;
+    if(result == expected){
+        cout << " \33[32m[OK]\33[39m\n";
+    }else{
+        cout << " != " << expected << " \33[31m[FAIL]\33[39m\n";
+    }
+}
+
 istringstream &lineStream(fstream &file, istringstream &line)
 {
     line.clear();

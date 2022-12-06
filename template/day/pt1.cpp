@@ -3,24 +3,19 @@
 using namespace std;
 using namespace Aoc;
 
-int expected; //TODO initialize
+string expected = ""; //TODO initialize
 
-int handleFile(const string &path){
+string &handleFile(const string &path){
     auto file = openFile(path);
     //TODO solve
+    //return to_string(...);
 }
 
 int main()
 {
-    int result;
-    result = handleFile("example.txt");
-    cout << result;
-    if(result == expected){
-        cout << " \33[32m[OK]\33[39m\n";
-    }else{
-        cout << " != " << expected << " \33[31m[FAIL]\33[39m\n";
-    }
+    string result = handleFile("example.txt");
+    printResult(result, expected);
     result = handleFile("input.txt");
     cout << result;
-    clipboard(to_string(result));
+    clipboard(result);
 }

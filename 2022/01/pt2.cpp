@@ -4,9 +4,9 @@
 using namespace std;
 using namespace Aoc;
 
-int expected = 45000;
+string expected = "45000";
 
-int handleFile(const string &path){
+string handleFile(const string &path){
     auto file = openFile(path);
     istringstream line;
     vector<int> sums;
@@ -16,20 +16,14 @@ int handleFile(const string &path){
         sums.push_back(sum);
     }
     sort(ALL(sums), greater<int>());
-    return sums[0] + sums[1] + sums[2];
+    return to_string(sums[0] + sums[1] + sums[2]);
 }
 
 int main()
 {
-    int result;
-    result = handleFile("example.txt");
-    cout << result;
-    if(result == expected){
-        cout << " \33[32m[OK]\33[39m\n";
-    }else{
-        cout << " != " << expected << " \33[31m[FAIL]\33[39m\n";
-    }
+    string result = handleFile("example.txt");
+    printResult(result, expected);
     result = handleFile("input.txt");
     cout << result;
-    clipboard(to_string(result));
+    clipboard(result);
 }

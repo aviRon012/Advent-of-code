@@ -3,11 +3,10 @@
 using namespace std;
 using namespace Aoc;
 
+string expected = "26984457539";
+
 #define int int64_t
-
-int expected = 26984457539;
-
-int handleFile(const string &path){
+string handleFile(const string &path){
     auto file = openFile(path);
     istringstream line;
     lineStreamNoPunctuation(file, line);
@@ -22,22 +21,15 @@ int handleFile(const string &path){
     }
     int sum = 0;
     for(int i = 0; i < 9; i++) sum += fish[i];
-    return sum;
+    return to_string(sum);
 }
-
 #undef int
+
 int main()
-#define int int64_t
 {
-    int result;
-    result = handleFile("example.txt");
-    cout << result;
-    if(result == expected){
-        cout << " \33[32m[OK]\33[39m\n";
-    }else{
-        cout << " != " << expected << " \33[31m[FAIL]\33[39m\n";
-    }
+    string result = handleFile("example.txt");
+    printResult(result, expected);
     result = handleFile("input.txt");
     cout << result;
-    clipboard(to_string(result));
+    clipboard(result);
 }

@@ -3,7 +3,7 @@
 using namespace std;
 using namespace Aoc;
 
-int expected = 2;
+string expected = "2";
 
 bool isContained(int x0, int x1, int y0, int y1)
 {
@@ -12,7 +12,7 @@ bool isContained(int x0, int x1, int y0, int y1)
     return false;
 }
 
-int handleFile(const string &path)
+string handleFile(const string &path)
 {
     auto file = openFile(path);
     int count = 0, x0, x1, y0, y1;
@@ -20,20 +20,14 @@ int handleFile(const string &path)
     while(lineStreamNoPunctuation(file, line) >> x0 >> x1 >> y0 >> y1){
         count += isContained(x0, x1, y0, y1);
     }
-    return count;
+    return to_string(count);
 }
 
 int main()
 {
-    int result;
-    result = handleFile("example.txt");
-    cout << result;
-    if(result == expected){
-        cout << " \33[32m[OK]\33[39m\n";
-    }else{
-        cout << " != " << expected << " \33[31m[FAIL]\33[39m\n";
-    }
+    string result = handleFile("example.txt");
+    printResult(result, expected);
     result = handleFile("input.txt");
     cout << result;
-    clipboard(to_string(result));
+    clipboard(result);
 }

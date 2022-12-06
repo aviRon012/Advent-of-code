@@ -13,6 +13,8 @@ void clipboard(const std::string &str);
 
 std::fstream openFile(const std::string &path);
 
+void printResult(std::string result, std::string expected);
+
 std::istringstream &lineStream(std::fstream &file, std::istringstream &line);
 
 std::istringstream &lineStreamNoPunctuation(std::fstream &file, std::istringstream &line);

@@ -4,7 +4,7 @@
 using namespace std;
 using namespace Aoc;
 
-int expected = 4512;
+string expected = "4512";
 
 bool ckeckForWin(array<array<int, 5>, 5> &board, int i, int j)
 {
@@ -40,7 +40,7 @@ bool updateBoard(array<array<int, 5>, 5> &board, int num)
     return false;
 }
 
-int evalWin(array<array<int, 5>, 5> &board, int num)
+string evalWin(array<array<int, 5>, 5> &board, int num)
 {
     int sum = 0;
     for(int i = 0; i < 5; i++){
@@ -48,10 +48,10 @@ int evalWin(array<array<int, 5>, 5> &board, int num)
             if(board[i][j] >= 0) sum += board[i][j];
         }
     }
-    return sum * num;
+    return to_string(sum * num);
 }
 
-int handleFile(const string &path)
+string handleFile(const string &path)
 {
     auto file = openFile(path);
     vector<int> nums;
@@ -74,20 +74,14 @@ int handleFile(const string &path)
             if(updateBoard(board, num)) return evalWin(board, num);
         }
     }
-    return -1;
+    return "";
 }
 
 int main()
 {
-    int result;
-    result = handleFile("example.txt");
-    cout << result;
-    if(result == expected){
-        cout << " \33[32m[OK]\33[39m\n";
-    }else{
-        cout << " != " << expected << " \33[31m[FAIL]\33[39m\n";
-    }
+    string result = handleFile("example.txt");
+    printResult(result, expected);
     result = handleFile("input.txt");
     cout << result;
-    clipboard(to_string(result));
+    clipboard(result);
 }

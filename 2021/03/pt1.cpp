@@ -4,7 +4,7 @@
 using namespace std;
 using namespace Aoc;
 
-int expected = 198;
+string expected = "198";
 
 template<int n>
 bool majorityAtIndex(vector<bitset<n>> &bits, int index)
@@ -23,7 +23,7 @@ bitset<n> majority(vector<bitset<n>> &bits)
 }
 
 template<int n>
-int handleFile(const string &path)
+string handleFile(const string &path)
 {
     auto file = openFile(path);
     bitset<n> in, maj;
@@ -32,20 +32,14 @@ int handleFile(const string &path)
     maj = majority<n>(bits);
     int gamma = maj.to_ulong();
     int epsilon = maj.flip().to_ulong();
-    return gamma * epsilon;
+    return to_string(gamma * epsilon);
 }
 
 int main()
 {
-    int result;
-    result = handleFile<5>("example.txt");
-    cout << result;
-    if(result == expected){
-        cout << " \33[32m[OK]\33[39m\n";
-    }else{
-        cout << " != " << expected << " \33[31m[FAIL]\33[39m\n";
-    }
+    string result = handleFile<5>("example.txt");
+    printResult(result, expected);
     result = handleFile<12>("input.txt");
     cout << result;
-    clipboard(to_string(result));
+    clipboard(result);
 }

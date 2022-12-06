@@ -25,15 +25,11 @@ string handleFile(const string &path){
     }
     string s1, s2, s3;
     int num, from, to;
-    //for(auto &pile: piles) cout << pile << endl;
-    //cout << "---" << endl;
     while(file >> s1 >> num >> s2 >> from >> s3 >> to){
         to--;
         from--;
         piles[to] += piles[from].substr(piles[from].size() - num);
         piles[from].erase(piles[from].size() - num);
-        //for(auto &pile: piles) cout << pile << endl;
-        //cout << "---" << endl;
     }
     string result;
     for(auto &pile: piles) result.push_back(pile.back());
@@ -42,14 +38,8 @@ string handleFile(const string &path){
 
 int main()
 {
-    string result;
-    result = handleFile("example.txt");
-    cout << result;
-    if(result == expected){
-        cout << " \33[32m[OK]\33[39m\n";
-    }else{
-        cout << " != " << expected << " \33[31m[FAIL]\33[39m\n";
-    }
+    string result = handleFile("example.txt");
+    printResult(result, expected);
     result = handleFile("input.txt");
     cout << result;
     clipboard(result);
