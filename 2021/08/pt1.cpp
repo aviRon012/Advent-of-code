@@ -3,12 +3,27 @@
 using namespace std;
 using namespace Aoc;
 
-string expected = ""; //TODO initialize
+string expected = "26";
 
-string &handleFile(const string &path){
+fstream &ignoreStart(fstream &file)
+{
+    string s;
+    for(int i = 0; i < 11; i++) file >> s;
+    return file;
+}
+
+string handleFile(const string &path)
+{
     auto file = openFile(path);
-    //TODO solve
-    //return to_string(...);
+    string s;
+    int count = 0;
+    while(ignoreStart(file)){
+        for(int i: {0,1,2,3}){
+            file >> s;
+            if(s.size() != 5 && s.size() != 6) count++;
+        }
+    }
+    return to_string(count);
 }
 
 int main()
