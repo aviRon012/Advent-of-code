@@ -7,10 +7,8 @@ using namespace Aoc;
 string expected = "24933642"; //TODO initialize
 
 string initialPath(vector<string> pwd, int deapth){
-    string path = "/";
-    for(int i = 1; i < deapth; i++){
-        path += pwd[i] + "/";
-    }
+    string path = "";
+    for(int i = 0; i < deapth; i++) path += "/" + pwd[i];
     return path;
 }
 
@@ -24,7 +22,7 @@ string handleFile(const string &path){
             file >> arg2;
             if(arg2 == "cd"){
                 file >> arg3;
-                if(arg3 == "/") pwd = {{"/"}};
+                if(arg3 == "/") pwd = {};
                 else if(arg3 == "..") pwd.pop_back();
                 else pwd.push_back(arg3);
             }else if(arg2 == "ls") continue;
@@ -33,11 +31,11 @@ string handleFile(const string &path){
             continue;
         }else{
             int sz = stoi(arg1);
-            for(int i = 1; i <= pwd.size(); i++) dirs[initialPath(pwd, i)] += sz;
+            for(int i = 0; i <= pwd.size(); i++) dirs[initialPath(pwd, i)] += sz;
             file >> arg2;
         }
     }
-    int toErase = dirs["/"] - 40'000'000, min = 70'000'000;
+    int toErase = dirs[""] - 40'000'000, min = 70'000'000;
     for(auto &[dir, size]: dirs) if(size >= toErase && size < min) min = size;
     return to_string(min);
 }
