@@ -7,11 +7,9 @@ string expected = "7";
 
 string handleFile(const string &path){
     auto file = openFile(path);
-    vector<int> nums;
-    int num;
-    while(file >> num) nums.push_back(num);
-    int count = 0;
-    for(int i = 1; i < nums.size(); i++) count += (nums[i] > nums[i - 1]);
+    int num, prev, count = 0;
+    file >> prev;
+    while(file >> num){count += (num > prev); prev = num;}
     return to_string(count);
 }
 

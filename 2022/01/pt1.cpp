@@ -1,6 +1,5 @@
 #include "../../aoc-utils.hpp"
 #include <iostream>
-#include <algorithm>
 using namespace std;
 using namespace Aoc;
 
@@ -9,13 +8,13 @@ string expected = "24000";
 string handleFile(const string &path){
     auto file = openFile(path);
     istringstream line;
-    vector<int> sums;
+    int max = 0;
     while(file){
         int num, sum = 0;
         while(lineStream(file, line) >> num) sum += num;
-        sums.push_back(sum);
+        max = (sum > max) ? sum : max;
     }
-    return to_string(*max_element(ALL(sums)));
+    return to_string(max);
 }
 
 int main()
