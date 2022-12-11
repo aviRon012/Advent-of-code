@@ -24,8 +24,8 @@ string handleFile(const string &path)
 {
     auto file = openFile(path);
     set<position> positions;
-    position rope[10] = {{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0}};
-    map<char, position> directions = {{'R',{1,0}}, {'L',{-1,0}}, {'U',{0,1}}, {'D',{0,-1}}};
+    position rope[10]{};
+    map<char, position> directions{{'R',{1,0}}, {'L',{-1,0}}, {'U',{0,1}}, {'D',{0,-1}}};
     char direction;
     int num;
     while(file >> direction >> num) for(int i = 0; i < num; i++){

@@ -5,7 +5,8 @@ using namespace Aoc;
 
 string expected = ""; //TODO initialize
 
-string handleFile(const string &path){
+string handleFile(const string &path)
+{
     auto file = openFile(path);
     //TODO solve
     //return to_string(...);
